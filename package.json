@@ -10,6 +10,7 @@
     "react": "15.3.1",
     "react-mini": "^1.1.0",
     "react-native": "^0.32.0",
+    "react-native-camera": "git+https://github.com/lwansbrough/react-native-camera.git",
     "react-native-meteor": "^1.0.0-rc14",
     "react-redux": "^4.4.5",
     "react-timer-mixin": "^0.13.3",
