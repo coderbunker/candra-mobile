@@ -6,7 +6,7 @@ import thunk from 'redux-thunk';
 import { createStore, combineReducers, applyMiddleware} from 'redux';
 import * as reducers from './reducers'
 
-import Navigator from './navigator';
+import Navigator from './navigator/navigator';
 import './meteor'
 
 const reducer = combineReducers(reducers);

@@ -10,21 +10,13 @@ import {
 
 import { connect } from 'react-redux';
 import {bindActionCreators} from 'redux';
-import * as homeActions from './home.action';
+import * as scannerActions from './scanner.action';
 
-class HomeContainer extends Component {
-  render() {
+class ScannerContainer extends Component {
+  render(){
     return (
       <View style={{marginTop:20}}>
-        <Text>{'Home'}</Text>
-        <TouchableOpacity onPress={() => {
-          this.props.onNavigate({
-            type: 'push',
-            key: 'Scanner'
-          })
-        }}>
-          <Text>{'Push'}</Text>
-        </TouchableOpacity>
+        <Text>{'Scanner'}</Text>
         <TouchableOpacity onPress={() => {
           this.props.onNavigate({
             type: 'pop',
@@ -33,18 +25,14 @@ class HomeContainer extends Component {
           <Text>{'Pop'}</Text>
         </TouchableOpacity>
       </View>
-    );
+    )
   }
 }
 
-var styles = StyleSheet.create({
-
-});
-
 export default connect(state => ({
-    state: state.home
+    state: state.scanner
   }),
   (dispatch) => ({
-    actions: bindActionCreators(homeActions, dispatch)
+    actions: bindActionCreators(scannerActions, dispatch)
   })
-)(HomeContainer);
+)(ScannerContainer);
