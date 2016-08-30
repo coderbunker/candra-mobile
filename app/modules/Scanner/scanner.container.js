@@ -13,20 +13,19 @@ import { connect } from 'react-redux';
 import {bindActionCreators} from 'redux';
 import * as scannerActions from './scanner.action';
 import { Comps } from '../../.';
-import Camera from 'react-native-camera';
+// import Camera from 'react-native-camera';
 
 const {
   NavigationBar,
   Button,
+  BarcodeScanner,
 } = Comps;
 
 class ScannerContainer extends Component {
 
   constructor(props) {
     super(props);
-
     this.barcodeDetected = false;
-
     this.state = {};
   }
 
@@ -69,12 +68,22 @@ class ScannerContainer extends Component {
   }
 
   _onBarCodeRead(){
+    const { dispatch } = this.props;
     if(this.barcodeDetected){ return; }
     this.barcodeDetected = true;
     Alert.alert(
       'Alert Title',
       'Barcode Detected',
-      []
+      [{text:'OK', onPress: () => {
+        setTimeout(function(){
+          dispatch({
+            type: 'SCANNER_SET_STATE',
+            props: {
+              barcodeScanned: true
+            }
+          });
+        },2000);
+      }}]
     );
   }
 
@@ -92,16 +101,21 @@ class ScannerContainer extends Component {
 
   _renderCamera() {
     return (
-      <Camera
-        ref={(cam) => {
-          this.camera = cam;
-        }}
+      <BarcodeScanner
         onBarCodeRead={this._onBarCodeRead.bind(this)}
-        style={styles.preview}
-        aspect={Camera.constants.Aspect.fill}>
-        {/*<Text style={styles.capture} onPress={this._takePicture.bind(this)}>[CAPTURE]</Text>
-        <Text style={styles.capture} onPress={this._pop.bind(this)}>[BACK]</Text>*/}
-      </Camera>
+      >
+        <View style={{flex:1,alignItems:'center',justifyContent:'center'}}>
+          <View style={{
+            borderColor:'#ccc',
+            borderWidth: 4,
+            width: 140,
+            height: 140,
+          }}/>
+          <Text style={{marginTop:20,backgroundColor:'transparent', color:'white'}}>
+            {'Scan QR Code'}
+          </Text>
+        </View>
+      </BarcodeScanner>
     );
   }
 
@@ -132,6 +146,7 @@ class ScannerContainer extends Component {
 
   render(){
     const { barcodeScanned, viewReady } = this.props.state;
+    const { dispatch } = this.props;
 
     var content;
 
@@ -149,7 +164,7 @@ class ScannerContainer extends Component {
           onPressLeft={this._pop.bind(this)}
           title={'Scanner'}
           onPressRight={()=>{
-            this.props.dispatch({
+            dispatch({
               type: 'SCANNER_SET_STATE',
               props: {
                 barcodeScanned: true

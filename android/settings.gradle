@@ -1,3 +1,9 @@
 rootProject.name = 'CandraMobile'
 
 include ':app'
+
+include ':RNMaterialKit'
+project(':RNMaterialKit').projectDir = file('../node_modules/react-native-material-kit/android')
+
+include ':react-native-barcodescanner', ':app'
+project(':react-native-barcodescanner').projectDir = new File(rootProject.projectDir, '../node_modules/react-native-barcodescanner/android')
