@@ -22,6 +22,7 @@ class Navigator extends Component {
       navigationState: {
         index: 0, // starts with first route focused.
         routes: [{key: 'Home'}], // starts with only one route.
+        // routes: [{key: 'Scanner'}], // starts with only one route.
       },
     };
 

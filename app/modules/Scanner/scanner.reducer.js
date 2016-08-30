@@ -1,15 +1,25 @@
 
 const initialState = {
-  //
-}
+  viewReady: false,
+  barcodeScanned: false,
+
+  // DEV USE
+  // viewReady: true,
+  // barcodeScanned: true,
+
+};
 
 export default function moduleName(state=initialState, action = {}){
 
-  if(action.type === 'SOME_ACTION'){
+  if(action.type === 'SCANNER_SET_STATE'){
     return {
       ...state,
-      trains: action.stuff,
-    }
+      ...action.props,
+    };
+  }
+
+  if(action.type === 'SCANNER_RESET_TO_INITIAL_STATE'){
+    return initialState;
   }
 
   return state;
