@@ -6,7 +6,6 @@ import {
   View,
   Text,
   Dimensions,
-  Alert,
 } from 'react-native';
 
 import { connect } from 'react-redux';
@@ -17,7 +16,6 @@ import { Comps } from '../../.';
 
 const {
   NavigationBar,
-  Button,
   BarcodeScanner,
 } = Comps;
 
@@ -31,60 +29,69 @@ class ScannerContainer extends Component {
 
   componentDidMount() {
     const { dispatch } = this.props;
-    setTimeout(function(){
-      dispatch({
-        type: 'SCANNER_SET_STATE',
-        props: {
-          viewReady: true
-        }
-      });
-    },500);
+
+    this.props.actions.setupScanner();
+
+    // getProducts().then((products)=>{
+    //   // console.log('products', products);
+    //   setTimeout(function(){
+    //     dispatch({
+    //       type: 'SCANNER_SET_STATE',
+    //       props: {
+    //         viewReady: true,
+    //         products,
+    //       }
+    //     });
+    //   },500);
+    // });
   }
 
-  componentWillUnmount(){
-    this.props.dispatch({
-      type: 'SCANNER_RESET_TO_INITIAL_STATE'
-    });
-  }
+  // componentWillUnmount(){
+  //   this.props.dispatch({
+  //     type: 'SCANNER_RESET_TO_INITIAL_STATE'
+  //   });
+  // }
 
-  _takePicture() {
-    this.camera.capture()
-      .then((data) => {
-        console.log(data)
-        Alert.alert(
-          'Alert Title',
-          'Picture Taken',
-          []
-        );
-      })
-      .catch(err => console.error(err));
+  _onBarCodeRead(scan){
 
-    this.props.dispatch({
-      type: 'SCANNER_SET_STATE',
-      props: {
-        barcodeScanned: true
-      }
-    });
-  }
+    const { data: barcode } = scan;
+    const { onNavigate } = this.props;
+    const { onBarcodeScanned } = this.props.actions;
 
-  _onBarCodeRead(){
-    const { dispatch } = this.props;
     if(this.barcodeDetected){ return; }
     this.barcodeDetected = true;
-    Alert.alert(
-      'Alert Title',
-      'Barcode Detected',
-      [{text:'OK', onPress: () => {
-        setTimeout(function(){
-          dispatch({
-            type: 'SCANNER_SET_STATE',
-            props: {
-              barcodeScanned: true
-            }
-          });
-        },2000);
-      }}]
-    );
+
+    onBarcodeScanned({
+      barcode,
+      onNavigate,
+    });
+
+    // Alert.alert(
+    //   'Alert Title',
+    //   'Barcode Detected',
+    //   [{text:'OK', onPress: () => {
+    //     setTimeout(function(){
+
+    //       dispatch({
+    //         type: 'NEW_PRODUCT_SET_STATE',
+    //         props: {
+    //           barcode,
+    //         }
+    //       });
+
+    //       onNavigate({
+    //         type: 'push',
+    //         key: 'Payment',
+    //       });
+    //       // dispatch({
+    //       //   type: 'SCANNER_SET_STATE',
+    //       //   props: {
+    //       //     barcodeScanned: true
+    //       //   }
+    //       // });
+    //     },2000);
+    //   }}]
+    // );
   }
 
   _pop(){
@@ -119,30 +126,30 @@ class ScannerContainer extends Component {
     );
   }
 
-  _renderPayment(){
-    return (
-      <View style={{flex:1,alignItems:'center'}}>
-      <Text>{'Product Title, Price'}</Text>
-        <View style={{backgroundColor:'#ccc',marginTop:20,width:220,height:220}}>
-          <Text>{'Product Pictrue'}</Text>
-        </View>
-        <Button
-          style={{marginTop:20}}
-          text={'PAY'}
-          onPress={()=>{
-            Alert.alert(
-              'Purchase success',
-              'Your payment has been processed. thanks for buying',
-              [{text: 'OK', onPress: () => {
-                this._pop.call(this);
-              }}]
-            );
+  // _renderPayment(){
+  //   return (
+  //     <View style={{flex:1,alignItems:'center'}}>
+  //     <Text>{'Product Title, Price'}</Text>
+  //       <View style={{backgroundColor:'#ccc',marginTop:20,width:220,height:220}}>
+  //         <Text>{'Product Pictrue'}</Text>
+  //       </View>
+  //       <Button
+  //         style={{marginTop:20}}
+  //         text={'PAY'}
+  //         onPress={()=>{
+  //           Alert.alert(
+  //             'Purchase success',
+  //             'Your payment has been processed. thanks for buying',
+  //             [{text: 'OK', onPress: () => {
+  //               this._pop.call(this);
+  //             }}]
+  //           );
 
-          }}
-        />
-      </View>
-    );
-  }
+  //         }}
+  //       />
+  //     </View>
+  //   );
+  // }
 
   render(){
     const { barcodeScanned, viewReady } = this.props.state;

@@ -2,10 +2,12 @@
 const initialState = {
   viewReady: false,
   barcodeScanned: false,
+  products: [],
 
   // DEV USE
   // viewReady: true,
   // barcodeScanned: true,
+
 
 };
 

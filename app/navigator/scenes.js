@@ -7,7 +7,16 @@ import {
 
 import Home from '../modules/Home/home.container'
 import Scanner from '../modules/Scanner/scanner.container'
+import Payment from '../modules/Payment/payment.container'
+import NewProduct from '../modules/NewProduct/newProduct.container'
 import Header from './header';
+
+const SceneComps = {
+  Home,
+  Scanner,
+  Payment,
+  NewProduct,
+};
 
 const {
   CardStack: NavigationCardStack,
@@ -63,20 +72,14 @@ class Scenes extends React.Component {
 
     // console.log('scene key', sceneProps.scene)
 
-    if(sceneProps.scene.route.key === 'Home'){
-      return (
-        <Home
-          onNavigate={this.props.onNavigate}
-        />
-      );
-    }
-    if(sceneProps.scene.route.key === 'Scanner'){
-      return (
-        <Scanner
-          onNavigate={this.props.onNavigate}
-        />
-      );
-    }
+    const SceneComp = SceneComps[sceneProps.scene.route.key]
+    const props = {
+      onNavigate: this.props.onNavigate
+    };
+
+    return (
+      <SceneComp {...props}/>
+    );
 
   }
 }

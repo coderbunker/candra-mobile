@@ -7,6 +7,7 @@
   },
   "dependencies": {
     "lodash": "^4.15.0",
+    "query-string": "^4.2.3",
     "react": "15.3.1",
     "react-mini": "^1.1.0",
     "react-native": "^0.32.0",

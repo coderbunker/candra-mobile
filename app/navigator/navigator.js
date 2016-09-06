@@ -23,6 +23,7 @@ class Navigator extends Component {
         index: 0, // starts with first route focused.
         routes: [{key: 'Home'}], // starts with only one route.
         // routes: [{key: 'Scanner'}], // starts with only one route.
+        // routes: [{key: 'NewProduct'}], // starts with only one route.
       },
     };
 
@@ -36,21 +37,29 @@ class Navigator extends Component {
   // _onNavigationChange(type: string): void {
   _onNavigate(navigation: object): void {
 
-    console.log('ON NAVGATE')
-
     let {navigationState} = this.state;
 
     const { type, key } = navigation;
 
+    console.log('ON NAVGATE', key);
+
     switch (type) {
       case 'push':
         // push a new route.
-        const route = { key };
+        var route = { key };
         navigationState = NavigationStateUtils.push(navigationState, route);
         break;
 
       case 'pop':
         navigationState = NavigationStateUtils.pop(navigationState);
+        break;
+
+      case 'replace':
+        var route = { key };
+        const { routes } = navigationState;
+        const lastRoute = routes[routes.length-1];
+        const lastKey = lastRoute.key;
+        navigationState = NavigationStateUtils.replaceAt(navigationState, lastKey, route);
         break;
     }
 

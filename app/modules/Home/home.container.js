@@ -22,7 +22,10 @@ class HomeContainer extends Component {
         <NavigationBar
           title={'Agora Space'}
         />
-        <View style={{flex:1,alignItems:'center',justifyContent:'center',}}>
+        <View style={{
+          flex:1,
+          alignItems:'center',
+          justifyContent:'center',}}>
           <Button
             onPress={() => {
               this.props.onNavigate({

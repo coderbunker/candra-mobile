@@ -15,6 +15,16 @@ const store = createStore(
   applyMiddleware(thunk),
 );
 
+global.LOG = function(){
+  if(!__DEV__) { return; }
+  console.log(...arguments);
+};
+
+global.WARN = function(){
+  if(!__DEV__) { return; }
+  console.warn(...arguments);
+};
+
 class App extends Component {
   render() {
     return (

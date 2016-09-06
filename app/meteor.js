@@ -5,11 +5,11 @@ import Meteor, { createContainer, MeteorListView } from 'react-native-meteor';
 
 Meteor.connect('ws://localhost:3000/websocket');
 
-settings = Meteor.collection('tasks').find({})
-console.log('tasks', settings)
+var products = Meteor.collection('product').find({})
+console.log('products', products);
 setInterval(function(){
-  settings = Meteor.collection('tasks').find({})
-  console.log('tasks', settings)
+  products = Meteor.collection('product').find({})
+  console.log('products', products);
   // const handle = Meteor.subscribe('todos');
 },5000)
 
